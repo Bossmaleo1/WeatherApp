@@ -13,10 +13,18 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.dagger.weatherapp.R
 import com.dagger.weatherapp.databinding.FragmentHomeBinding
 import com.dagger.weatherapp.model.entity.City
+import com.dagger.weatherapp.view.adapter.ChooseCityListAdapter
+import com.dagger.weatherapp.view.adapter.ForeCastListAdapter
+import com.dagger.weatherapp.viewmodel.ForeCastPeriodModel
+import com.dagger.weatherapp.viewmodel.ListCityViewModel
+import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment : Fragment() {
@@ -24,6 +32,8 @@ class HomeFragment : Fragment() {
     private lateinit var binding : FragmentHomeBinding
     private var city: City? = null
     private  var actionbar:ActionBar? = null
+    private lateinit var viewModel: ForeCastPeriodModel
+    private val foreCastListAdapter = ForeCastListAdapter(arrayListOf())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,11 +61,30 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         customOurCallBack()
 
+        //we called our viewmodel
+        viewModel = ViewModelProvider(this).get(ForeCastPeriodModel::class.java)
+
         arguments?.let {
             city = HomeFragmentArgs.fromBundle(it).cityitem
             //we set the town title
             actionbar!!.title =  city!!.cityName
         }
+
+        forecastList.apply{
+            layoutManager = LinearLayoutManager(context)
+            adapter = foreCastListAdapter
+        }
+
+        observeMyViewModel()
+    }
+
+    //in this function we are observe our city list
+    fun observeMyViewModel() {
+        viewModel.foreCastPeriodeList.observe(this, Observer {foreCastPeriodList->
+            foreCastPeriodList.let {
+                foreCastListAdapter.updateCityList(foreCastPeriodList)
+            }
+        })
     }
 
 
