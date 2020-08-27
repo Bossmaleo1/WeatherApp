@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <data>
+        <variable
+            name="city"
+            type="com.dagger.weatherapp.model.entity.City" />
+
+        <variable
+            name="listener"
+            type="com.dagger.weatherapp.view.listener.CityListener" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:onClick="@{listener::onCityClicked}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            android:padding="5dp"
+            >
+            <RelativeLayout
+                android:background="@drawable/list_city_radius"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <ImageView
+                        android:id="@+id/city_icon"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/baseline_location_city_black_48"
+                        app:tint="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/city_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/city_icon"
+                        android:layout_gravity="center"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/colorPrimary"
+                        android:text="@{city.cityName}"
+                        android:textStyle="bold"
+                        />
+
+                    <TextView
+                        android:id="@+id/cityid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:text="@{String.valueOf(city.id)}"
+                        />
+
+
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

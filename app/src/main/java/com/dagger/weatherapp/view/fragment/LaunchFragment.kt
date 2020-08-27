@@ -1,4 +1,4 @@
-package com.dagger.weatherapp.view
+package com.dagger.weatherapp.view.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.dagger.weatherapp.R
 import com.dagger.weatherapp.databinding.FragmentLaunchBinding
+import com.dagger.weatherapp.model.entity.City
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -37,7 +39,10 @@ class LaunchFragment : Fragment() {
         CoroutineScope(Dispatchers.Main) .launch {
             delay(100)
             //val bundle = bundleOf("user_input" to  binding.editText.text.toString())
-            findNavController().navigate(R.id.action_launchFragment_to_homeFragment)
+            val action = LaunchFragmentDirections.actionLaunchFragmentToHomeFragment()
+            action.cityitem = City(0,"New York",40.712776,-74.005974)
+            //Navigation.findNavController(v).navigate(action)
+            findNavController().navigate(action)
         }
     }
 

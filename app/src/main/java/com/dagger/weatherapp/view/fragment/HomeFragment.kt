@@ -1,4 +1,4 @@
-package com.dagger.weatherapp.view
+package com.dagger.weatherapp.view.fragment
 
 import android.content.Intent
 import android.graphics.PorterDuff
@@ -10,33 +10,39 @@ import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import com.dagger.weatherapp.R
 import com.dagger.weatherapp.databinding.FragmentHomeBinding
+import com.dagger.weatherapp.model.entity.City
 
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding : FragmentHomeBinding
+    private var city: City? = null
+    private  var actionbar:ActionBar? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
+        //we initialize our city with New York
 
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,container,false)
 
         setHasOptionsMenu(true)
 
         (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
-        val actionbar = (activity as AppCompatActivity?)!!.supportActionBar
+        actionbar = (activity as AppCompatActivity?)!!.supportActionBar
 
         //here we are enabled false a arrow back button
         actionbar!!.setDisplayHomeAsUpEnabled(false)
         //here we set the town title
-        actionbar!!.title =  "Chicago"
+        //actionbar!!.title =  city?.cityName
 
         return binding.root
     }
@@ -44,6 +50,12 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         customOurCallBack()
+
+        arguments?.let {
+            city = HomeFragmentArgs.fromBundle(it).cityitem
+            //we set the town title
+            actionbar!!.title =  city!!.cityName
+        }
     }
 
 
@@ -77,7 +89,9 @@ class HomeFragment : Fragment() {
         when(item.itemId){
 
             R.id.mytown -> {
-
+                val action = HomeFragmentDirections.actionHomeFragmentToChooseCityFragment()
+                action.cityitem = city
+                findNavController().navigate(action)
             }
         }
 
