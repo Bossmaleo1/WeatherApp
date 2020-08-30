@@ -6,13 +6,12 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -20,10 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dagger.weatherapp.R
 import com.dagger.weatherapp.databinding.FragmentHomeBinding
 import com.dagger.weatherapp.model.entity.City
-import com.dagger.weatherapp.view.adapter.ChooseCityListAdapter
 import com.dagger.weatherapp.view.adapter.ForeCastListAdapter
 import com.dagger.weatherapp.viewmodel.ForeCastPeriodModel
-import com.dagger.weatherapp.viewmodel.ListCityViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -132,8 +129,6 @@ class HomeFragment : Fragment() {
                 val action = HomeFragmentDirections.actionHomeFragmentToCityMapFragment()
                 action.cityitem = city
                 findNavController().navigate(action)
-                /*action.cityitem = city
-                findNavController().navigate(action)*/
             }
         }
 

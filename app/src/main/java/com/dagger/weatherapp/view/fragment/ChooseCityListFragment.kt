@@ -85,10 +85,6 @@ class ChooseCityListFragment : Fragment(){
 
             android.R.id.home -> {
                 findNavController().popBackStack()
-                //Navigation.findNavController().popBackStack()
-                /*val action = ChooseCityListFragmentDirections.actionChooseCityFragmentToHomeFragment()
-                action.cityitem = city
-                findNavController().navigate(action)*/
                 return true
             }
 

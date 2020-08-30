@@ -1,35 +1,46 @@
 package com.dagger.weatherapp.view.fragment
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.dagger.weatherapp.R
+import com.dagger.weatherapp.databinding.FragmentChooseCityBinding
+import com.dagger.weatherapp.databinding.FragmentCityMapBinding
+import com.dagger.weatherapp.model.entity.City
+import com.dagger.weatherapp.viewmodel.ListCityViewModel
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.fragment_city_map.*
 
 
 class CityMapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-
-        arguments?.let {
-
-        }
-    }
+    private var city: City? = null
+    private  lateinit var binding : FragmentCityMapBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_city_map,container,false)
+
+        //val view = inflater.inflate(R.layout.fragment_city_map, container, false)
+
+
+        (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
+        val actionbar = (activity as AppCompatActivity?)!!.supportActionBar
+
+        //here we are enabled false a arrow back button
+        actionbar!!.setDisplayHomeAsUpEnabled(true)
+        //we config our map
         val mapOptions = GoogleMapOptions()
             .mapType(GoogleMap.MAP_TYPE_NORMAL)
             .zoomControlsEnabled(true)
@@ -39,26 +50,54 @@ class CityMapFragment : Fragment(), OnMapReadyCallback {
 
         mapFragment.getMapAsync(this)
 
+        //here we called a google map view
         activity!!.supportFragmentManager.beginTransaction()
             .replace(R.id.content,mapFragment)
             .commit()
 
+        //we call our arguments
+        arguments?.let {
+            city = CityMapFragmentArgs.fromBundle(it).cityitem
+            actionbar!!.title =  city!!.cityName
+        }
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_city_map, container, false)
+        return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+
 
     override fun onMapReady(googleMap: GoogleMap) {
-            mMap = googleMap
+        mMap = googleMap
 
-       /* mMap = googleMap
-
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))*/
-
-        val sydney = LatLng(40.712776,-74.005974)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        val mytown = city?.lat?.let { LatLng(it, city!!.long) }
+        mMap.addMarker(mytown?.let { MarkerOptions().position(it).title("Our Town Map") })
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mytown,16f))
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.home_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+
+            android.R.id.home -> {
+                findNavController().popBackStack()
+                Toast.makeText(context,"Test de MALEO-SAMA",Toast.LENGTH_LONG).show()
+                return true
+            }
+
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+
 
 }
