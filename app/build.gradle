@@ -59,6 +59,9 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
 
+
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
     //material design dependency
     implementation 'com.google.android.material:material:1.1.0-alpha06'
 

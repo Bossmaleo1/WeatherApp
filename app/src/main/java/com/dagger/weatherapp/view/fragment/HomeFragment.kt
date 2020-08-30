@@ -109,9 +109,14 @@ class HomeFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.home_menu,menu)
+        //here we are change our icon color
         val myTownIcon : Drawable? = activity!!.getDrawable(R.drawable.baseline_location_city_black_24)
         myTownIcon!!.setColorFilter(activity!!.getColor(R.color.white), PorterDuff.Mode.SRC_IN)
         menu!!.findItem(R.id.mytown).icon = myTownIcon
+        //here we are change our icon color
+        val mycitymap : Drawable? = activity!!.getDrawable(R.drawable.baseline_location_on_black_24)
+        mycitymap!!.setColorFilter(activity!!.getColor(R.color.white), PorterDuff.Mode.SRC_IN)
+        menu!!.findItem(R.id.mycitymap).icon = mycitymap
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -121,6 +126,14 @@ class HomeFragment : Fragment() {
                 val action = HomeFragmentDirections.actionHomeFragmentToChooseCityFragment()
                 action.cityitem = city
                 findNavController().navigate(action)
+            }
+
+            R.id.mycitymap -> {
+                val action = HomeFragmentDirections.actionHomeFragmentToCityMapFragment()
+                action.cityitem = city
+                findNavController().navigate(action)
+                /*action.cityitem = city
+                findNavController().navigate(action)*/
             }
         }
 

@@ -13,6 +13,7 @@
             android:id="@+id/action_launchFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.dagger.weatherapp.view.fragment.HomeFragment"
@@ -26,7 +27,12 @@
             android:defaultValue="@null"
             app:nullable="true"
             app:argType="com.dagger.weatherapp.model.entity.City"/>
+        <action
+            android:id="@+id/action_homeFragment_to_cityMapFragment"
+            app:destination="@id/cityMapFragment" />
     </fragment>
+
+
     <fragment
         android:id="@+id/chooseCityFragment"
         android:name="com.dagger.weatherapp.view.fragment.ChooseCityListFragment"
@@ -44,4 +50,18 @@
 
 
     </fragment>
+    <fragment
+        android:id="@+id/cityMapFragment"
+        android:name="com.dagger.weatherapp.view.fragment.CityMapFragment"
+        android:label="fragment_city_map"
+        tools:layout="@layout/fragment_city_map" >
+
+        <argument
+            android:name="cityitem"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.dagger.weatherapp.model.entity.City"/>
+    </fragment>
+
+
 </navigation>

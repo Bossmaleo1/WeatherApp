@@ -2,11 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <item
+        android:id="@+id/mycitymap"
+        android:title="mycitymap"
+        android:icon="@drawable/baseline_location_on_black_24"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/mytown"
         android:title="mytown"
         android:icon="@drawable/baseline_location_city_black_24"
         app:showAsAction="ifRoom" />
-
 
 </menu>
