@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.dagger.weatherapp.model.entity.City
 import com.dagger.weatherapp.model.entity.ForeCastPeriodItem
 
-class ForeCastPeriodModel : ViewModel() {
+class ForeCastPeriodViewModel : ViewModel() {
 
     val foreCastPeriodeList = MutableLiveData<List<ForeCastPeriodItem>>()
 

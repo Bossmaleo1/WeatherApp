@@ -20,7 +20,7 @@ import com.dagger.weatherapp.R
 import com.dagger.weatherapp.databinding.FragmentHomeBinding
 import com.dagger.weatherapp.model.entity.City
 import com.dagger.weatherapp.view.adapter.ForeCastListAdapter
-import com.dagger.weatherapp.viewmodel.ForeCastPeriodModel
+import com.dagger.weatherapp.viewmodel.ForeCastPeriodViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -29,7 +29,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding : FragmentHomeBinding
     private var city: City? = null
     private  var actionbar:ActionBar? = null
-    private lateinit var viewModel: ForeCastPeriodModel
+    private lateinit var viewModel: ForeCastPeriodViewModel
     private val foreCastListAdapter = ForeCastListAdapter(arrayListOf())
 
     override fun onCreateView(
@@ -59,7 +59,7 @@ class HomeFragment : Fragment() {
         customOurCallBack()
 
         //we called our viewmodel
-        viewModel = ViewModelProvider(this).get(ForeCastPeriodModel::class.java)
+        viewModel = ViewModelProvider(this).get(ForeCastPeriodViewModel::class.java)
 
         arguments?.let {
             city = HomeFragmentArgs.fromBundle(it).cityitem
