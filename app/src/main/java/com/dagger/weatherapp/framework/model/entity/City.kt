@@ -1,4 +1,4 @@
-package com.dagger.weatherapp.model.entity
+package com.dagger.weatherapp.framework.model.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

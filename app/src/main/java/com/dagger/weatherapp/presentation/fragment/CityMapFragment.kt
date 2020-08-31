@@ -1,4 +1,4 @@
-package com.dagger.weatherapp.view.fragment
+package com.dagger.weatherapp.presentation.fragment
 
 import android.os.Bundle
 import android.view.*
@@ -6,17 +6,14 @@ import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.dagger.weatherapp.R
-import com.dagger.weatherapp.databinding.FragmentChooseCityBinding
 import com.dagger.weatherapp.databinding.FragmentCityMapBinding
-import com.dagger.weatherapp.model.entity.City
-import com.dagger.weatherapp.viewmodel.ListCityViewModel
+import com.dagger.weatherapp.framework.model.entity.City
+import com.dagger.weatherapp.presentation.fragment.CityMapFragmentArgs
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.fragment_city_map.*
 
 
 class CityMapFragment : Fragment(), OnMapReadyCallback {
@@ -57,7 +54,9 @@ class CityMapFragment : Fragment(), OnMapReadyCallback {
 
         //we call our arguments
         arguments?.let {
-            city = CityMapFragmentArgs.fromBundle(it).cityitem
+            city = CityMapFragmentArgs.fromBundle(
+                it
+            ).cityitem
             actionbar!!.title =  city!!.cityName
         }
 

@@ -5,11 +5,11 @@
     <data>
         <variable
             name="city"
-            type="com.dagger.weatherapp.model.entity.City" />
+            type="com.dagger.weatherapp.framework.model.entity.City" />
 
         <variable
             name="listener"
-            type="com.dagger.weatherapp.view.listener.CityListener" />
+            type="com.dagger.weatherapp.presentation.listener.CityListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

@@ -1,4 +1,4 @@
-package com.dagger.weatherapp.view.adapter
+package com.dagger.weatherapp.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dagger.weatherapp.R
 import com.dagger.weatherapp.databinding.ForecastAdapterBinding
-import com.dagger.weatherapp.model.entity.ForeCastPeriodItem
+import com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItem
 
 class ForeCastListAdapter(val foreCastPeriodList: ArrayList<ForeCastPeriodItem>) :  RecyclerView.Adapter<ForeCastListAdapter.ForeCastViewHolder>() {
 

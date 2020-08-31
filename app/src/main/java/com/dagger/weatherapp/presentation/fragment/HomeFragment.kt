@@ -1,4 +1,4 @@
-package com.dagger.weatherapp.view.fragment
+package com.dagger.weatherapp.presentation.fragment
 
 import android.content.Intent
 import android.graphics.PorterDuff
@@ -18,9 +18,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dagger.weatherapp.R
 import com.dagger.weatherapp.databinding.FragmentHomeBinding
-import com.dagger.weatherapp.model.entity.City
-import com.dagger.weatherapp.view.adapter.ForeCastListAdapter
-import com.dagger.weatherapp.viewmodel.ForeCastPeriodViewModel
+import com.dagger.weatherapp.framework.model.entity.City
+import com.dagger.weatherapp.presentation.adapter.ForeCastListAdapter
+import com.dagger.weatherapp.presentation.fragment.HomeFragmentArgs
+import com.dagger.weatherapp.presentation.fragment.HomeFragmentDirections
+import com.dagger.weatherapp.framework.viewmodel.ForeCastPeriodViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -62,7 +64,9 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(ForeCastPeriodViewModel::class.java)
 
         arguments?.let {
-            city = HomeFragmentArgs.fromBundle(it).cityitem
+            city = HomeFragmentArgs.fromBundle(
+                it
+            ).cityitem
             //we set the town title
             actionbar!!.title =  city!!.cityName
         }
@@ -120,13 +124,15 @@ class HomeFragment : Fragment() {
         when(item.itemId){
 
             R.id.mytown -> {
-                val action = HomeFragmentDirections.actionHomeFragmentToChooseCityFragment()
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToChooseCityFragment()
                 action.cityitem = city
                 findNavController().navigate(action)
             }
 
             R.id.mycitymap -> {
-                val action = HomeFragmentDirections.actionHomeFragmentToCityMapFragment()
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToCityMapFragment()
                 action.cityitem = city
                 findNavController().navigate(action)
             }

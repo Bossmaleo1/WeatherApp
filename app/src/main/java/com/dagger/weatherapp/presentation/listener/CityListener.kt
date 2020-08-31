@@ -1,4 +1,4 @@
-package com.dagger.weatherapp.view.listener
+package com.dagger.weatherapp.presentation.listener
 
 import android.view.View
 

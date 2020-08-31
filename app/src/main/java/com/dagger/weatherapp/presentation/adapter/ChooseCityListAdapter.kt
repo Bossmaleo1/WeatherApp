@@ -1,18 +1,16 @@
-package com.dagger.weatherapp.view.adapter
+package com.dagger.weatherapp.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.dagger.weatherapp.R
 import com.dagger.weatherapp.databinding.ChooseCityAdapterBinding
-import com.dagger.weatherapp.model.entity.City
-import com.dagger.weatherapp.view.fragment.ChooseCityListFragmentDirections
-import com.dagger.weatherapp.view.fragment.HomeFragmentDirections
-import com.dagger.weatherapp.view.listener.CityListener
+import com.dagger.weatherapp.framework.model.entity.City
+import com.dagger.weatherapp.presentation.fragment.ChooseCityListFragmentDirections
+import com.dagger.weatherapp.presentation.listener.CityListener
 import kotlinx.android.synthetic.main.choose_city_adapter.view.*
 
 class ChooseCityListAdapter(val cities: ArrayList<City>) :  RecyclerView.Adapter<ChooseCityListAdapter.ChooseCityViewHolder>(),

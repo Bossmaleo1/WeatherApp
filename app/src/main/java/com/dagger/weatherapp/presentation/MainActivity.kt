@@ -1,4 +1,4 @@
-package com.dagger.weatherapp.view
+package com.dagger.weatherapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
