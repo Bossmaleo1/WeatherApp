@@ -2,10 +2,14 @@ package com.dagger.weatherapp.framework.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.dagger.core.data.ForeCastPeriodItem
 import com.dagger.weatherapp.framework.model.entity.City
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 class ListCityViewModel : ViewModel() {
 
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
     val cities = MutableLiveData<List<City>>()
 
     init {
@@ -36,12 +40,10 @@ class ListCityViewModel : ViewModel() {
                 -80.191788
             )
         )
-        /*cities.value.apply {
 
-            it.add(City("New York",40.712776,-74.005974))
-            it.add(City("Chicago",41.878113,-87.629799))
-            it.add(City("San Francisco",37.774929,-122.419418))
-            it.add(City("Miami",25.761681,-80.191788))
-        }*/
+        val saved =  MutableLiveData<Boolean>()
+        val currentForeCastPeriodItem = MutableLiveData<ForeCastPeriodItem?>()
+
+        //fun
     }
 }

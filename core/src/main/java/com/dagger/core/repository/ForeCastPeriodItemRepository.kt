@@ -4,11 +4,11 @@ import com.dagger.core.data.ForeCastPeriodItem
 
 class ForeCastPeriodItemRepository (private val foreCastPeriodItemDataSource: ForeCastPeriodItemDataSource){
 
-    suspend fun addForeCastPeriodItem(note: ForeCastPeriodItem) = foreCastPeriodItemDataSource.add(note)
+    suspend fun insertAllForeCastPeriodItem(forecastPeriodItem: ForeCastPeriodItem) = foreCastPeriodItemDataSource.InsertAll(forecastPeriodItem)
 
     suspend fun getForeCastPeriodItem(id: Long) = foreCastPeriodItemDataSource.get(id)
 
     suspend fun getAllForeCastPeriodItems() = foreCastPeriodItemDataSource.getAll()
 
-    suspend fun removeForeCastPeriodItem(note : ForeCastPeriodItem) = foreCastPeriodItemDataSource.remove(note)
+    suspend fun removeForeCastPeriodItem(forecastPeriod : ForeCastPeriodItem) = foreCastPeriodItemDataSource.remove(forecastPeriod)
 }

@@ -4,7 +4,7 @@ import com.dagger.core.data.ForeCastPeriodItem
 
 interface ForeCastPeriodItemDataSource {
 
-    suspend fun add(foreCastPeriodItem: ForeCastPeriodItem)
+    suspend fun InsertAll(foreCastPeriodItem: ForeCastPeriodItem) : List<Long>
 
     suspend fun get(id: Long) : ForeCastPeriodItem?
 
