@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.dagger.weatherapp.R
 import com.dagger.weatherapp.databinding.FragmentLaunchBinding
 import com.dagger.weatherapp.framework.model.entity.City
-import com.dagger.weatherapp.presentation.fragment.LaunchFragmentDirections
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -45,7 +44,8 @@ class LaunchFragment : Fragment() {
                 0,
                 "New York",
                 40.712776,
-                -74.005974
+                -74.005974,32,
+                34
             )
             //Navigation.findNavController(v).navigate(action)
             findNavController().navigate(action)
