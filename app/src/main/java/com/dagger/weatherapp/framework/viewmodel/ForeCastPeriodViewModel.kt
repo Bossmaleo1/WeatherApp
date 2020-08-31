@@ -4,7 +4,10 @@ import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.dagger.weatherapp.framework.model.entity.ApiMainEntity
 import com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItemEntity
+import com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItemResponse
+import com.dagger.weatherapp.framework.model.entity.PropertiesEntity
 import com.dagger.weatherapp.framework.model.remotedata.ForeCastPeriodService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -30,25 +33,31 @@ class ForeCastPeriodViewModel  (app: Application): AndroidViewModel(app) {
                 "A chance of showers and thunderstorms. Mostly cloudy, with a low around 76. Southwest wind around 8 mph. Chance of precipitation is 30%. New rainfall amounts less than a tenth of an inch possible."
             )
         )
+
+        fetchFromRemote()
+
     }
 
 
     private fun fetchFromRemote() {
 
         disposable.add(
-            foreCastPeriodService.getForeCastPeriod("88,126")
+            foreCastPeriodService.getApiMainCall("25.761681,-80.191788")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object: DisposableSingleObserver<List<ForeCastPeriodItemEntity>>(){
-                    override fun onSuccess(dogList: List<ForeCastPeriodItemEntity>) {
-                        Toast.makeText(getApplication(),"Succès !!", Toast.LENGTH_SHORT).show()
+                .subscribeWith(object: DisposableSingleObserver<ApiMainEntity>(){
+                    override fun onSuccess(apiMainEntity: ApiMainEntity) {
+
+
                     }
 
                     override fun onError(e: Throwable) {
-                        Toast.makeText(getApplication(),"Error !!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(getApplication(),"Error !!${e.printStackTrace()}", Toast.LENGTH_SHORT).show()
                     }
 
                 })
         )
     }
+
+
 }

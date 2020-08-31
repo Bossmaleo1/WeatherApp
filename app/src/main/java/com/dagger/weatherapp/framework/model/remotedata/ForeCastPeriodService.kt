@@ -1,6 +1,9 @@
 package com.dagger.weatherapp.framework.model.remotedata
 
-import com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItemEntity
+
+import com.dagger.weatherapp.framework.model.entity.ApiMainEntity
+import com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItemResponse
+import com.dagger.weatherapp.framework.model.entity.PropertiesMainEntity
 import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -17,7 +20,11 @@ class ForeCastPeriodService {
         .build()
         .create(ForeCastPeriodApi::class.java)
 
-    fun getForeCastPeriod(grid : String) : Single<List<ForeCastPeriodItemEntity>> {
+    fun getForeCastPeriod(grid : String) : Single<ForeCastPeriodItemResponse> {
         return api.getForeCastPeriod(grid)
+    }
+
+    fun getApiMainCall(latlong:String) : Single<ApiMainEntity> {
+        return api.getApiMainCall(latlong)
     }
 }
