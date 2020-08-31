@@ -19,9 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/ThemeWeatherLight">
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBAEd7TWmykhu3PuC13htYOfyRQmA5vkEU"/>
+      
 
 
         <meta-data
