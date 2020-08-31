@@ -8,6 +8,7 @@ buildscript {
     ext.roomVersion = "2.1.0-rc01"
     ext.rxJavaVersion = '2.1.1'
     ext.retrofitVersion = '2.3.0'
+    ext.preferencesVersion = '1.0.0'
 
     repositories {
         google()

@@ -9,6 +9,7 @@ import com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItemEntity
 import com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItemResponse
 import com.dagger.weatherapp.framework.model.entity.PropertiesEntity
 import com.dagger.weatherapp.framework.model.remotedata.ForeCastPeriodService
+import com.dagger.weatherapp.framework.util.SharedPreferencesHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
@@ -20,8 +21,8 @@ class ForeCastPeriodViewModel  (app: Application): AndroidViewModel(app) {
     private val disposable = CompositeDisposable()
     private val foreCastPeriodService = ForeCastPeriodService()
 
-    //private var prefHelper = SharedPreferencesHelper(getApplication())
-    //private var refreshTime = 5 * 60 * 1000 * 1000 * 1000L
+    private var prefHelper = SharedPreferencesHelper(getApplication())
+    private var refreshTime = 5 * 60 * 1000 * 1000 * 1000L
 
     init {
 

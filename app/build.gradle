@@ -93,6 +93,9 @@ dependencies {
     kapt "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
 
+    //our multidex dependence
     implementation "com.android.support:multidex:1.0.3"
+    //our sharedpreference dependence
+    implementation "androidx.preference:preference:$preferencesVersion"
 
 }
