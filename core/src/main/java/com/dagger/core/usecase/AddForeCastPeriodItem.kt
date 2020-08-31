@@ -1,4 +1,9 @@
 package com.dagger.core.usecase
 
-class AddForeCastPeriodItem {
+import com.dagger.core.data.ForeCastPeriodItem
+import com.dagger.core.repository.ForeCastPeriodItemRepository
+
+class AddForeCastPeriodItem(private val foreCastPeriodItemRepository: ForeCastPeriodItemRepository) {
+
+    suspend fun invoke(foreCastPeriodItem : ForeCastPeriodItem) = foreCastPeriodItemRepository.addForeCastPeriodItem(foreCastPeriodItem)
 }

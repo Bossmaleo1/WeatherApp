@@ -2,16 +2,16 @@ package com.dagger.weatherapp.framework.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItem
+import com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItemEntity
 
 class ForeCastPeriodViewModel : ViewModel() {
 
-    val foreCastPeriodeList = MutableLiveData<List<ForeCastPeriodItem>>()
+    val foreCastPeriodeList = MutableLiveData<List<ForeCastPeriodItemEntity>>()
 
     init {
 
         foreCastPeriodeList.value = arrayListOf(
-            ForeCastPeriodItem(
+            ForeCastPeriodItemEntity(
                 4, "Friday Night",
                 "2020-08-28T18:00:00-04:00", "2020-08-29T06:00:00-04:00",
                 false, 76, "F",

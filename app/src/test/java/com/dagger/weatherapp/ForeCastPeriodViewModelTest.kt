@@ -1,7 +1,7 @@
 package com.dagger.weatherapp
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItem
+import com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItemEntity
 import com.dagger.weatherapp.framework.viewmodel.ForeCastPeriodViewModel
 import org.junit.Assert.*
 import org.junit.Rule
@@ -18,7 +18,7 @@ class ForeCastPeriodViewModelTest {
             ForeCastPeriodViewModel()
         val foreCastPeriodItem =
             ForeCastPeriodViewModel()
-        val observer : TestObserver<List<ForeCastPeriodItem>> = viewModel.foreCastPeriodeList.testObserver()
+        val observer : TestObserver<List<ForeCastPeriodItemEntity>> = viewModel.foreCastPeriodeList.testObserver()
         /*Assert.assertEquals(arrayListOf(
             ForeCastPeriodItem(4,"Friday Night",
                 "2020-08-28T18:00:00-04:00","2020-08-29T06:00:00-04:00",

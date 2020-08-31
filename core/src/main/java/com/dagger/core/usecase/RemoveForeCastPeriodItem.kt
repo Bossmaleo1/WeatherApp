@@ -1,4 +1,10 @@
 package com.dagger.core.usecase
 
-class RemoveForeCastPeriodItem {
+import com.dagger.core.data.ForeCastPeriodItem
+import com.dagger.core.repository.ForeCastPeriodItemRepository
+
+class RemoveForeCastPeriodItem (private val foreCastPeriodItemRepository: ForeCastPeriodItemRepository) {
+
+    suspend fun invoke(foreCastPeriodItem : ForeCastPeriodItem) = foreCastPeriodItemRepository.removeForeCastPeriodItem(foreCastPeriodItem)
+
 }
