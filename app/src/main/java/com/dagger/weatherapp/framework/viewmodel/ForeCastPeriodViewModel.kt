@@ -20,6 +20,9 @@ class ForeCastPeriodViewModel  (app: Application): AndroidViewModel(app) {
     private val disposable = CompositeDisposable()
     private val foreCastPeriodService = ForeCastPeriodService()
 
+    //private var prefHelper = SharedPreferencesHelper(getApplication())
+    //private var refreshTime = 5 * 60 * 1000 * 1000 * 1000L
+
     init {
 
         foreCastPeriodeList.value = arrayListOf(
@@ -47,8 +50,43 @@ class ForeCastPeriodViewModel  (app: Application): AndroidViewModel(app) {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object: DisposableSingleObserver<ApiMainEntity>(){
                     override fun onSuccess(apiMainEntity: ApiMainEntity) {
+                        Toast.makeText(getApplication(),"Succes 1!! ${splitOurForeCastPath(apiMainEntity.properties.forecast)}", Toast.LENGTH_SHORT).show()
+                        /*here we launch our forecast api call with the url
+                        who are get with our main apiCall */
+                        fetchRemoteForeCast(splitOurForeCastPath(apiMainEntity.properties.forecast))
+                    }
+
+                    override fun onError(e: Throwable) {
+                        Toast.makeText(getApplication(),"Error !!${e.printStackTrace()}", Toast.LENGTH_SHORT).show()
+                    }
+
+                })
+        )
+    }
+
+    private fun splitOurForeCastPath(path : String) : String {
+        var newpath : String? = ""
+        val tempPath = path.split("/")
+        for(i in 3 until tempPath.size) {
+            if(newpath.equals("")){
+                newpath = tempPath[i]
+            }else {
+                newpath = newpath+"/"+tempPath[i]
+            }
+
+        }
+        return newpath!!
+    }
 
 
+    private fun fetchRemoteForeCast(url : String) {
+        disposable.add(
+            foreCastPeriodService.getForeCastPeriod(url)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object: DisposableSingleObserver<ForeCastPeriodItemResponse>(){
+                    override fun onSuccess(foreCastPeriodItemResponse: ForeCastPeriodItemResponse) {
+                        Toast.makeText(getApplication(),"Succes !!", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onError(e: Throwable) {
