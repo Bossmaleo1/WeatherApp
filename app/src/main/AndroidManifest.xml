@@ -19,7 +19,6 @@
         android:supportsRtl="true"
         android:theme="@style/ThemeWeatherLight">
 
-       
 
 
         <meta-data

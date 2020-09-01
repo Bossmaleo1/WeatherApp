@@ -2,8 +2,6 @@ package com.dagger.weatherapp.framework.viewmodel
 
 import android.app.Application
 import android.util.Log
-import android.widget.Toast
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.dagger.core.data.ForeCastPeriodItem
@@ -14,7 +12,7 @@ import com.dagger.weatherapp.framework.model.entity.ApiMainEntity
 import com.dagger.weatherapp.framework.model.entity.City
 import com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItemEntity
 import com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItemResponse
-import com.dagger.weatherapp.framework.model.remotedata.ForeCastPeriodService
+import com.dagger.weatherapp.framework.model.remotedata.ForeCastPeriodApiService
 import com.dagger.weatherapp.framework.util.SharedPreferencesHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -29,7 +27,7 @@ class ForeCastPeriodViewModel(app: Application, city: City): AndroidViewModel(ap
 
     val foreCastPeriodeList = MutableLiveData<List<ForeCastPeriodItem>>()
     private val disposable = CompositeDisposable()
-    private val foreCastPeriodService = ForeCastPeriodService()
+    private val foreCastPeriodService = ForeCastPeriodApiService()
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     private var prefHelper = SharedPreferencesHelper(getApplication())
