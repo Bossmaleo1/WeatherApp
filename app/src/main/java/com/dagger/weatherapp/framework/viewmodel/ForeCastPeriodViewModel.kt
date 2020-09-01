@@ -41,6 +41,8 @@ class ForeCastPeriodViewModel(app: Application, city: City): AndroidViewModel(ap
 
     val saved =  MutableLiveData<Boolean>()
 
+    val loading = MutableLiveData<Boolean>()
+
     init {
 
         DaggerViewModelComponent.builder()
@@ -86,6 +88,8 @@ class ForeCastPeriodViewModel(app: Application, city: City): AndroidViewModel(ap
 
     private fun fetchFromRemote(path: String) {
 
+        loading.value = true
+
         disposable.add(
             foreCastPeriodService.getApiMainCall(path)
                 .subscribeOn(Schedulers.newThread())
@@ -98,6 +102,7 @@ class ForeCastPeriodViewModel(app: Application, city: City): AndroidViewModel(ap
                        Log.i("retrofit","/"+splitOurForeCastPath(apiMainEntity.properties.forecast))
 
                         fetchRemoteForeCast(splitOurForeCastPath(apiMainEntity.properties.forecast))
+                        loading.value = false
                     }
 
                     override fun onError(e: Throwable) {
@@ -125,19 +130,22 @@ class ForeCastPeriodViewModel(app: Application, city: City): AndroidViewModel(ap
 
 
     private fun fetchRemoteForeCast(url : String) {
+        loading.value = true
         disposable.add(
             foreCastPeriodService.getForeCastPeriod(url)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object: DisposableSingleObserver<ForeCastPeriodItemResponse>(){
                     override fun onSuccess(foreCastPeriodItemResponse: ForeCastPeriodItemResponse) {
-
+                        loading.value = false
                         storageForeCastPeriodItem(foreCastPeriodItemResponse.properties.periods)
                         fetchFromDatabase()
+                        loading.value = false
                     }
 
                     override fun onError(e: Throwable) {
-                        Toast.makeText(getApplication(),"Error !!${e.printStackTrace()}", Toast.LENGTH_SHORT).show()
+                        Log.i("retrofit","Error !!${e.printStackTrace()}")
+                        loading.value = false
                     }
 
                 })
@@ -185,6 +193,7 @@ class ForeCastPeriodViewModel(app: Application, city: City): AndroidViewModel(ap
     }
 
    private fun fetchFromDatabase() {
+       loading.value = true
         coroutineScope.launch {
             val foreCastPeriodList = useCases.getAllForeCastPeriodItem()
             foreCastPeriodeList.postValue(foreCastPeriodList)

@@ -5,6 +5,7 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -104,15 +105,28 @@ class HomeFragment : Fragment() , OnMapReadyCallback {
 
     //in this function we are observe our city list
     fun observeMyViewModel() {
-        viewModel.foreCastPeriodeList.observe(this, Observer {foreCastPeriodList->
-            foreCastPeriodList.let {
-                foreCastListAdapter.updateCityList(foreCastPeriodList)
 
-                /*for(element in foreCastPeriodList){
-                    Toast.makeText(context," ${element.temperature}", Toast.LENGTH_SHORT).show()
-                }*/
+        //we are call our forecasperiod livedata
+        viewModel.foreCastPeriodeList.observe(this, Observer {foreCastPeriodList->
+            foreCastPeriodList?.let {
+                mainblock.visibility = View.VISIBLE
+                shimmer_view_container.visibility = View.GONE
+                foreCastListAdapter.updateCityList(foreCastPeriodList)
+                Log.i("retrofit","done !!")
             }
         })
+
+
+       /* viewModel.loading.observe(this, Observer { isLoading->
+                isLoading?.let {
+                    if(isLoading) {
+                        mainblock.visibility = View.VISIBLE
+                        shimmer_view_container.visibility = View.GONE
+                    }
+                }
+        })*/
+
+
     }
 
 

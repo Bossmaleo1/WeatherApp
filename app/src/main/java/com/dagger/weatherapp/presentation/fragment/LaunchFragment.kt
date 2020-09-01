@@ -41,10 +41,10 @@ class LaunchFragment : Fragment() {
             val action =
                 LaunchFragmentDirections.actionLaunchFragmentToHomeFragment()
             action.cityitem = City(
-                0,
-                "New York",
-                40.712776,
-                -74.005974
+                1,
+                "Chicago",
+                41.878113,
+                -87.629799
             )
             //Navigation.findNavController(v).navigate(action)
             findNavController().navigate(action)
