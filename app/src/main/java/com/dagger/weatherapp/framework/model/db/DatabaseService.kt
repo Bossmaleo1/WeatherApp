@@ -24,5 +24,5 @@ abstract class DatabaseService : RoomDatabase()  {
             (instance ?: create(context)).also { instance = it }
     }
 
-    //abstract fun noteDAO(): NoteDAO
+    abstract fun foreCastPeriodItemDAO(): ForeCastPeriodItemDAO
 }

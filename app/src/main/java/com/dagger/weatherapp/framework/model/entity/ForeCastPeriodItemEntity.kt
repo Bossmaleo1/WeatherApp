@@ -3,22 +3,23 @@ package com.dagger.weatherapp.framework.model.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.dagger.core.data.ForeCastPeriodItem
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "foreCastPeriodItem")
-data class ForeCastPeriodItemEntity (
+data class ForeCastPeriodItemEntity(
     @ColumnInfo(name = "number")
     @SerializedName("number")
-    val number : Int?,
+    val number: Int?,
     @ColumnInfo(name = "name")
     @SerializedName("name")
-    val name : String?,
+    val name: String?,
     @ColumnInfo(name = "startTime")
     @SerializedName("startTime")
-    val startTime : String?,
+    val startTime: String?,
     @ColumnInfo(name = "endTime")
     @SerializedName("endTime")
-    val endTime : String?,
+    val endTime: String?,
     @ColumnInfo(name = "isDaytime")
     @SerializedName("isDaytime")
     val isDaytime: Boolean?,
@@ -27,7 +28,7 @@ data class ForeCastPeriodItemEntity (
     val temperature: Int?,
     @ColumnInfo(name = "temperatureUnit")
     @SerializedName("temperatureUnit")
-    val temperatureUnit : String?,
+    val temperatureUnit: String?,
     @ColumnInfo(name = "temperatureTrend")
     @SerializedName("temperatureTrend")
     val temperatureTrend: String?,
@@ -46,7 +47,44 @@ data class ForeCastPeriodItemEntity (
     @ColumnInfo(name = "detailedForecast")
     @SerializedName("detailedForecast")
     val detailedForecast: String?
-){
+) {
     @PrimaryKey(autoGenerate = true)
     var uuid: Int = 0
+
+    companion object {
+
+        fun fromForeCastPeriodItem(foreCastPeriodItem: ForeCastPeriodItem) =
+            ForeCastPeriodItemEntity(
+                foreCastPeriodItem.number,
+                foreCastPeriodItem.name,
+                foreCastPeriodItem.startTime,
+                foreCastPeriodItem.endTime,
+                foreCastPeriodItem.isDaytime,
+                foreCastPeriodItem.temperature,
+                foreCastPeriodItem.temperatureUnit,
+                foreCastPeriodItem.temperatureTrend,
+                foreCastPeriodItem.windSpeed,
+                foreCastPeriodItem.windDirection,
+                foreCastPeriodItem.icon,
+                foreCastPeriodItem.shortForecast,
+                foreCastPeriodItem.detailedForecast
+            )
+
+    }
+
+    fun toForeCastPeriodItem() = ForeCastPeriodItem(
+        number,
+        name,
+        startTime,
+        endTime,
+        isDaytime,
+        temperature,
+        temperatureUnit,
+        temperatureTrend,
+        windSpeed,
+        windDirection,
+        icon,
+        shortForecast,
+        detailedForecast
+    )
 }

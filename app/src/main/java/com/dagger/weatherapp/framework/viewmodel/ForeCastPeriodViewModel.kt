@@ -24,19 +24,11 @@ class ForeCastPeriodViewModel  (app: Application): AndroidViewModel(app) {
     private var prefHelper = SharedPreferencesHelper(getApplication())
     private var refreshTime = 5 * 60 * 1000 * 1000 * 1000L
 
+
+
     init {
 
-        foreCastPeriodeList.value = arrayListOf(
-            ForeCastPeriodItemEntity(
-                4, "Friday Night",
-                "2020-08-28T18:00:00-04:00", "2020-08-29T06:00:00-04:00",
-                false, 76, "F",
-                null, "8 mph", "SW",
-                "https://api.weather.gov/icons/land/night/tsra,30?size=medium",
-                "Chance Showers And Thunderstorms",
-                "A chance of showers and thunderstorms. Mostly cloudy, with a low around 76. Southwest wind around 8 mph. Chance of precipitation is 30%. New rainfall amounts less than a tenth of an inch possible."
-            )
-        )
+
 
         fetchFromRemote()
 
@@ -97,6 +89,15 @@ class ForeCastPeriodViewModel  (app: Application): AndroidViewModel(app) {
                 })
         )
     }
+
+    /*private fun fetchFromDatabase() {
+        loading.value = true
+        launch {
+            val dogs = DogDatabase(getApplication()).dogDAO().getAllDogs()
+            dogsRetrieved(dogs)
+            Toast.makeText(getApplication(),"Dogs retrieved from database",Toast.LENGTH_SHORT).show()
+        }
+    }*/
 
 
 }

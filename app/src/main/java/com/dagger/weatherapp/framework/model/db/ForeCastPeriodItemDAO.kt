@@ -8,10 +8,10 @@ import com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItemEntity
 interface ForeCastPeriodItemDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(vararg foreCastPeriodItemEntities: ForeCastPeriodItemEntity) : List<Long>
+    suspend fun addForeCastPeriodItem(foreCastPeriodItemEntity: ForeCastPeriodItemEntity)
 
     @Query("SELECT * FROM foreCastPeriodItem WHERE uuid = :id")
-    suspend fun getNoteEntity(id : Long): ForeCastPeriodItemEntity?
+    suspend fun getForeCastPeriodItemEntity(id : Long): ForeCastPeriodItemEntity?
 
     @Query("SELECT * FROM foreCastPeriodItem")
     suspend fun getAllForeCastPeriodItemEntities() : List<ForeCastPeriodItemEntity>
