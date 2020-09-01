@@ -27,9 +27,6 @@
             android:defaultValue="@null"
             app:nullable="true"
             app:argType="com.dagger.weatherapp.framework.model.entity.City"/>
-        <action
-            android:id="@+id/action_homeFragment_to_cityMapFragment"
-            app:destination="@id/cityMapFragment" />
     </fragment>
 
 
@@ -50,18 +47,7 @@
 
 
     </fragment>
-    <fragment
-        android:id="@+id/cityMapFragment"
-        android:name="com.dagger.weatherapp.presentation.fragment.CityMapFragment"
-        android:label="fragment_city_map"
-        tools:layout="@layout/fragment_city_map" >
 
-        <argument
-            android:name="cityitem"
-            android:defaultValue="@null"
-            app:nullable="true"
-            app:argType="com.dagger.weatherapp.framework.model.entity.City"/>
-    </fragment>
 
 
 </navigation>

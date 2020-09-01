@@ -25,16 +25,21 @@ import com.dagger.weatherapp.presentation.adapter.ForeCastListAdapter
 import com.dagger.weatherapp.presentation.fragment.HomeFragmentArgs
 import com.dagger.weatherapp.presentation.fragment.HomeFragmentDirections
 import com.dagger.weatherapp.framework.viewmodel.ForeCastPeriodViewModel
+import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment() , OnMapReadyCallback {
 
     private lateinit var binding : FragmentHomeBinding
     private var city: City? = null
     private  var actionbar:ActionBar? = null
     private lateinit var viewModel: ForeCastPeriodViewModel
     private val foreCastListAdapter = ForeCastListAdapter(arrayListOf())
+
+    private lateinit var mMap: GoogleMap
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,8 +57,21 @@ class HomeFragment : Fragment() {
 
         //here we are enabled false a arrow back button
         actionbar!!.setDisplayHomeAsUpEnabled(false)
-        //here we set the town title
-        //actionbar!!.title =  city?.cityName
+
+        //we config our map
+        val mapOptions = GoogleMapOptions()
+            .mapType(GoogleMap.MAP_TYPE_NORMAL)
+            .zoomControlsEnabled(true)
+            .zoomGesturesEnabled(true)
+
+        val mapFragment = SupportMapFragment.newInstance(mapOptions)
+
+        mapFragment.getMapAsync(this)
+
+        //here we called a google map view
+        activity!!.supportFragmentManager.beginTransaction()
+            .replace(R.id.content,mapFragment)
+            .commit()
 
         return binding.root
     }
@@ -120,10 +138,6 @@ class HomeFragment : Fragment() {
         val myTownIcon : Drawable? = activity!!.getDrawable(R.drawable.baseline_location_city_black_24)
         myTownIcon!!.setColorFilter(activity!!.getColor(R.color.white), PorterDuff.Mode.SRC_IN)
         menu!!.findItem(R.id.mytown).icon = myTownIcon
-        //here we are change our icon color
-        val mycitymap : Drawable? = activity!!.getDrawable(R.drawable.baseline_location_on_black_24)
-        mycitymap!!.setColorFilter(activity!!.getColor(R.color.white), PorterDuff.Mode.SRC_IN)
-        menu!!.findItem(R.id.mycitymap).icon = mycitymap
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -136,15 +150,17 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(action)
             }
 
-            R.id.mycitymap -> {
-                val action =
-                    HomeFragmentDirections.actionHomeFragmentToCityMapFragment()
-                action.cityitem = city
-                findNavController().navigate(action)
-            }
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+
+        val mytown = city?.lat?.let { LatLng(it, city!!.long) }
+        mMap.addMarker(mytown?.let { MarkerOptions().position(it).title("Our Town Map") })
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mytown,16f))
     }
 
 
