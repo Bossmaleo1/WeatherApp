@@ -22,9 +22,8 @@ import com.dagger.weatherapp.R
 import com.dagger.weatherapp.databinding.FragmentHomeBinding
 import com.dagger.weatherapp.framework.model.entity.City
 import com.dagger.weatherapp.presentation.adapter.ForeCastListAdapter
-import com.dagger.weatherapp.presentation.fragment.HomeFragmentArgs
-import com.dagger.weatherapp.presentation.fragment.HomeFragmentDirections
 import com.dagger.weatherapp.framework.viewmodel.ForeCastPeriodViewModel
+import com.dagger.weatherapp.framework.viewmodel.ForeCastPeriodViewModelFactory
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -37,6 +36,7 @@ class HomeFragment : Fragment() , OnMapReadyCallback {
     private var city: City? = null
     private  var actionbar:ActionBar? = null
     private lateinit var viewModel: ForeCastPeriodViewModel
+    private lateinit var viewModelFactory: ForeCastPeriodViewModelFactory
     private val foreCastListAdapter = ForeCastListAdapter(arrayListOf())
 
     private lateinit var mMap: GoogleMap
@@ -80,8 +80,7 @@ class HomeFragment : Fragment() , OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState)
         customOurCallBack()
 
-        //we called our viewmodel
-        viewModel = ViewModelProvider(this).get(ForeCastPeriodViewModel::class.java)
+
 
         arguments?.let {
             city = HomeFragmentArgs.fromBundle(
@@ -90,6 +89,10 @@ class HomeFragment : Fragment() , OnMapReadyCallback {
             //we set the town title
             actionbar!!.title =  city!!.cityName
         }
+
+        viewModelFactory = ForeCastPeriodViewModelFactory(activity!!.application,city!!)
+        //we called our viewmodel
+        viewModel = ViewModelProvider(this,viewModelFactory).get(ForeCastPeriodViewModel::class.java)
 
         forecastList.apply{
             layoutManager = LinearLayoutManager(context,OrientationHelper.HORIZONTAL,false)
@@ -105,9 +108,9 @@ class HomeFragment : Fragment() , OnMapReadyCallback {
             foreCastPeriodList.let {
                 foreCastListAdapter.updateCityList(foreCastPeriodList)
 
-                for(element in foreCastPeriodList){
+                /*for(element in foreCastPeriodList){
                     Toast.makeText(context," ${element.temperature}", Toast.LENGTH_SHORT).show()
-                }
+                }*/
             }
         })
     }

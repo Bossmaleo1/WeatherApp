@@ -10,7 +10,7 @@ interface ForeCastPeriodItemDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addForeCastPeriodItem(foreCastPeriodItemEntity: ForeCastPeriodItemEntity)
 
-    @Query("SELECT * FROM foreCastPeriodItem WHERE uuid = :id")
+    @Query("SELECT * FROM foreCastPeriodItem WHERE number = :id")
     suspend fun getForeCastPeriodItemEntity(id : Long): ForeCastPeriodItemEntity?
 
     @Query("SELECT * FROM foreCastPeriodItem")

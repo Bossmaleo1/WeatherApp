@@ -8,7 +8,5 @@ data class City (
     val id: Int?,
     val cityName : String?,
     val lat: Double,
-    val long: Double,
-    val gridX: Int?,
-    val gridY: Int?
+    val long: Double
 ): Parcelable

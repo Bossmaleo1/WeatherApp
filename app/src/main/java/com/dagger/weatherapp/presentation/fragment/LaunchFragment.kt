@@ -44,8 +44,7 @@ class LaunchFragment : Fragment() {
                 0,
                 "New York",
                 40.712776,
-                -74.005974,32,
-                34
+                -74.005974
             )
             //Navigation.findNavController(v).navigate(action)
             findNavController().navigate(action)

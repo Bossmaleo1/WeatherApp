@@ -2,7 +2,6 @@ package com.dagger.weatherapp.framework.model.remotedata
 
 import com.dagger.weatherapp.framework.model.entity.ApiMainEntity
 import com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItemResponse
-import com.dagger.weatherapp.framework.model.entity.PropertiesMainEntity
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

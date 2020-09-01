@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName
 @Entity(tableName = "foreCastPeriodItem")
 data class ForeCastPeriodItemEntity(
     @ColumnInfo(name = "number")
+    @PrimaryKey
     @SerializedName("number")
     val number: Int?,
     @ColumnInfo(name = "name")
@@ -48,8 +49,7 @@ data class ForeCastPeriodItemEntity(
     @SerializedName("detailedForecast")
     val detailedForecast: String?
 ) {
-    @PrimaryKey(autoGenerate = true)
-    var uuid: Int = 0
+
 
     companion object {
 

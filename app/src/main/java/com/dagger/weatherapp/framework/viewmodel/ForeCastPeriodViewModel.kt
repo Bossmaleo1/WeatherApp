@@ -1,7 +1,9 @@
 package com.dagger.weatherapp.framework.viewmodel
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.dagger.core.data.ForeCastPeriodItem
@@ -9,6 +11,7 @@ import com.dagger.weatherapp.framework.di.ApplicationModule
 import com.dagger.weatherapp.framework.di.DaggerViewModelComponent
 import com.dagger.weatherapp.framework.model.UseCases
 import com.dagger.weatherapp.framework.model.entity.ApiMainEntity
+import com.dagger.weatherapp.framework.model.entity.City
 import com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItemEntity
 import com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItemResponse
 import com.dagger.weatherapp.framework.model.remotedata.ForeCastPeriodService
@@ -22,7 +25,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ForeCastPeriodViewModel  (app: Application): AndroidViewModel(app) {
+class ForeCastPeriodViewModel(app: Application, city: City): AndroidViewModel(app) {
 
     val foreCastPeriodeList = MutableLiveData<List<ForeCastPeriodItem>>()
     private val disposable = CompositeDisposable()
@@ -37,7 +40,6 @@ class ForeCastPeriodViewModel  (app: Application): AndroidViewModel(app) {
 
 
     val saved =  MutableLiveData<Boolean>()
-    val currentForeCastPeriodItem = MutableLiveData<ForeCastPeriodItem?>()
 
     init {
 
@@ -46,28 +48,61 @@ class ForeCastPeriodViewModel  (app: Application): AndroidViewModel(app) {
             .build()
             .inject(this)
 
-        getForeCastPeriod()
-        fetchFromRemote()
+        //getForeCastPeriod()
+        val path:String = ""+city.lat+","+city.long
+        //fetchFromRemote(path)
+        refresh(path)
 
     }
 
 
-    private fun fetchFromRemote() {
+    private fun checkCacheDuration() {
+        val cachePreference = prefHelper.getCacheDuration()
+
+        try {
+            val cachePreferenceInt = cachePreference?.toInt() ?: 5 * 60
+            refreshTime = cachePreferenceInt.times(60*1000*1000*100L)
+        }catch (e: NumberFormatException){
+            e.printStackTrace()
+        }
+    }
+
+    fun refreshBypassCache(path:String) {
+        fetchFromRemote(path)
+    }
+
+
+    fun refresh(path: String) {
+        checkCacheDuration()
+        val updateTime = prefHelper.getUpdateTime()
+       /* if(updateTime != null && updateTime != 0L && System.nanoTime() - updateTime < refreshTime) {
+            fetchFromDatabase()
+            Toast.makeText(getApplication(),"locally !!",Toast.LENGTH_LONG).show()
+        } else {*/
+            fetchFromRemote(path)
+        //Toast.makeText
+    }
+
+
+    private fun fetchFromRemote(path: String) {
 
         disposable.add(
-            foreCastPeriodService.getApiMainCall("25.761681,-80.191788")
+            foreCastPeriodService.getApiMainCall(path)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object: DisposableSingleObserver<ApiMainEntity>(){
                     override fun onSuccess(apiMainEntity: ApiMainEntity) {
-                        Toast.makeText(getApplication(),"Succes 1!! ${splitOurForeCastPath(apiMainEntity.properties.forecast)}", Toast.LENGTH_SHORT).show()
                         /*here we launch our forecast api call with the url
                         who are get with our main apiCall */
+                       //fetchRemoteForeCast(splitOurForeCastPath(apiMainEntity.properties.forecast))
+                       Log.i("retrofit","/"+splitOurForeCastPath(apiMainEntity.properties.forecast))
+
                         fetchRemoteForeCast(splitOurForeCastPath(apiMainEntity.properties.forecast))
                     }
 
                     override fun onError(e: Throwable) {
-                        Toast.makeText(getApplication(),"Error !!${e.printStackTrace()}", Toast.LENGTH_SHORT).show()
+                        //if we have a network error we display with our cache
+                        fetchFromDatabase()
                     }
 
                 })
@@ -98,6 +133,7 @@ class ForeCastPeriodViewModel  (app: Application): AndroidViewModel(app) {
                     override fun onSuccess(foreCastPeriodItemResponse: ForeCastPeriodItemResponse) {
 
                         storageForeCastPeriodItem(foreCastPeriodItemResponse.properties.periods)
+                        fetchFromDatabase()
                     }
 
                     override fun onError(e: Throwable) {
@@ -148,10 +184,10 @@ class ForeCastPeriodViewModel  (app: Application): AndroidViewModel(app) {
         disposable.clear()
     }
 
-    fun getForeCastPeriod() {
+   private fun fetchFromDatabase() {
         coroutineScope.launch {
-            val noteList = useCases.getAllForeCastPeriodItem()
-            foreCastPeriodeList.postValue(noteList)
+            val foreCastPeriodList = useCases.getAllForeCastPeriodItem()
+            foreCastPeriodeList.postValue(foreCastPeriodList)
         }
     }
 
