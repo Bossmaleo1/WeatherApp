@@ -21,40 +21,53 @@
                 android:id="@+id/icon"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
                 android:src="@drawable/baseline_location_city_black_24" />
 
             <TextView
+                android:layout_marginTop="5dp"
                 android:id="@+id/day"
+                android:textSize="35dp"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/icon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{foreCastPeriodItem.name}" />
-
-
+                />
 
             <TextView
-                android:id="@+id/timeperiods"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/day"
-                android:text="@{foreCastPeriodItem.startTime}" />
-
-
-            <TextView
+                android:layout_marginTop="0dp"
+                android:textSize="70dp"
                 android:id="@+id/temperature"
+                android:layout_below="@+id/day"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/timeperiods"
-                android:text="@{String.valueOf(foreCastPeriodItem.temperature)}" />
+                android:layout_height="wrap_content" />
+
 
             <TextView
+                android:layout_marginTop="0dp"
+                android:id="@+id/timestarted"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/temperature" />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/timeend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/timestarted" />
+
+
+            <TextView
+                android:layout_marginTop="5dp"
                 android:id="@+id/windSpeed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/temperature"
+                android:layout_below="@+id/timeend"
                 android:text="@{foreCastPeriodItem.windSpeed}" />
 
             <TextView
+                android:layout_marginTop="5dp"
                 android:id="@+id/shortforecast"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,10 +75,12 @@
                 android:text="@{foreCastPeriodItem.shortForecast}" />
 
             <TextView
+                android:layout_marginTop="5dp"
                 android:id="@+id/detailedForecast"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/shortforecast"
+                android:paddingBottom="10dp"
                 android:text="@{foreCastPeriodItem.detailedForecast}" />
 
         </RelativeLayout>

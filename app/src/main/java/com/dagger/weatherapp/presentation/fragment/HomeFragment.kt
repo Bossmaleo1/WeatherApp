@@ -1,5 +1,6 @@
 package com.dagger.weatherapp.presentation.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
@@ -77,6 +78,7 @@ class HomeFragment : Fragment() , OnMapReadyCallback {
         return binding.root
     }
 
+    @SuppressLint("WrongConstant")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         customOurCallBack()

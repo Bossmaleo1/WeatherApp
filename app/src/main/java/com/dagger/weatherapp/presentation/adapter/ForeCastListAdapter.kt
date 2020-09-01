@@ -21,7 +21,8 @@ class ForeCastListAdapter(private val foreCastPeriodList: ArrayList<ForeCastPeri
 
     inner class ForeCastViewHolder(view: View): RecyclerView.ViewHolder(view) {
         private val  day = view.day
-        private val timeperiods = view.timeperiods
+        private val timestarted = view.timestarted
+        private val timeend = view.timeend
         private val temperature= view.temperature
         private val windSpeed = view.windSpeed
         private val shortforecast = view.shortforecast
@@ -30,12 +31,26 @@ class ForeCastListAdapter(private val foreCastPeriodList: ArrayList<ForeCastPeri
 
         fun bind(foreCastPeriodItem:  ForeCastPeriodItem) {
             day.text = foreCastPeriodItem.name
-            timeperiods.text = foreCastPeriodItem.endTime
-            temperature.text = foreCastPeriodItem.temperature.toString()
-            windSpeed.text = foreCastPeriodItem.windSpeed
+
+
+            timestarted.text = "Started : "+foreCastPeriodItem.startTime.toString().split("T")[0]+
+                    " between "+foreCastPeriodItem.startTime.toString().split("T")[1].split("-")[0]+
+                    " and "+foreCastPeriodItem.startTime.toString().split("T")[1].split("-")[1]
+
+            //
+            timeend.text = "Finished : "+foreCastPeriodItem.endTime.toString().split("T")[0]+
+            " between "+foreCastPeriodItem.endTime.toString().split("T")[1].split("-")[0]+
+                    " and "+foreCastPeriodItem.endTime.toString().split("T")[1].split("-")[1]
+
+            temperature.text = foreCastPeriodItem.temperature.toString()+" "+foreCastPeriodItem.temperatureUnit
+            windSpeed.text = "The wind speed is "+foreCastPeriodItem.windSpeed
             shortforecast.text = foreCastPeriodItem.shortForecast
-            detailedForecast.text = foreCastPeriodItem.detailedForecast
+            detailedForecast.text =  foreCastPeriodItem.detailedForecast
             loadImage(icon,foreCastPeriodItem.icon)
+        }
+
+        fun splitTheDate(data : String) {
+
         }
     }
 
