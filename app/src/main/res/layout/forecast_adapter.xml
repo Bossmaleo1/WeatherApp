@@ -6,7 +6,7 @@
     <data>
         <variable
             name="foreCastPeriodItem"
-            type="com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItemEntity" />
+            type="com.dagger.core.data.ForeCastPeriodItem" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

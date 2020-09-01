@@ -5,6 +5,6 @@ import com.dagger.core.repository.ForeCastPeriodItemRepository
 
 class RemoveForeCastPeriodItem (private val foreCastPeriodItemRepository: ForeCastPeriodItemRepository) {
 
-    suspend fun invoke(foreCastPeriodItem : ForeCastPeriodItem) = foreCastPeriodItemRepository.removeForeCastPeriodItem(foreCastPeriodItem)
+    suspend operator fun invoke(foreCastPeriodItem : ForeCastPeriodItem) = foreCastPeriodItemRepository.removeForeCastPeriodItem(foreCastPeriodItem)
 
 }

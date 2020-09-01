@@ -4,32 +4,49 @@ import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.dagger.core.data.ForeCastPeriodItem
+import com.dagger.weatherapp.framework.di.ApplicationModule
+import com.dagger.weatherapp.framework.di.DaggerViewModelComponent
+import com.dagger.weatherapp.framework.model.UseCases
 import com.dagger.weatherapp.framework.model.entity.ApiMainEntity
 import com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItemEntity
 import com.dagger.weatherapp.framework.model.entity.ForeCastPeriodItemResponse
-import com.dagger.weatherapp.framework.model.entity.PropertiesEntity
 import com.dagger.weatherapp.framework.model.remotedata.ForeCastPeriodService
 import com.dagger.weatherapp.framework.util.SharedPreferencesHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class ForeCastPeriodViewModel  (app: Application): AndroidViewModel(app) {
 
-    val foreCastPeriodeList = MutableLiveData<List<ForeCastPeriodItemEntity>>()
+    val foreCastPeriodeList = MutableLiveData<List<ForeCastPeriodItem>>()
     private val disposable = CompositeDisposable()
     private val foreCastPeriodService = ForeCastPeriodService()
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     private var prefHelper = SharedPreferencesHelper(getApplication())
     private var refreshTime = 5 * 60 * 1000 * 1000 * 1000L
 
+    @Inject
+    lateinit var useCases : UseCases
 
+
+    val saved =  MutableLiveData<Boolean>()
+    val currentForeCastPeriodItem = MutableLiveData<ForeCastPeriodItem?>()
 
     init {
 
+        DaggerViewModelComponent.builder()
+            .applicationModule(ApplicationModule(getApplication()))
+            .build()
+            .inject(this)
 
-
+        getForeCastPeriod()
         fetchFromRemote()
 
     }
@@ -79,7 +96,8 @@ class ForeCastPeriodViewModel  (app: Application): AndroidViewModel(app) {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object: DisposableSingleObserver<ForeCastPeriodItemResponse>(){
                     override fun onSuccess(foreCastPeriodItemResponse: ForeCastPeriodItemResponse) {
-                        Toast.makeText(getApplication(),"Succes !!", Toast.LENGTH_SHORT).show()
+
+                        storageForeCastPeriodItem(foreCastPeriodItemResponse.properties.periods)
                     }
 
                     override fun onError(e: Throwable) {
@@ -90,14 +108,52 @@ class ForeCastPeriodViewModel  (app: Application): AndroidViewModel(app) {
         )
     }
 
-    /*private fun fetchFromDatabase() {
-        loading.value = true
-        launch {
-            val dogs = DogDatabase(getApplication()).dogDAO().getAllDogs()
-            dogsRetrieved(dogs)
-            Toast.makeText(getApplication(),"Dogs retrieved from database",Toast.LENGTH_SHORT).show()
+
+    //this method save our ForeCastPeriod in our locale database
+    fun saveForeCastPeriodItem(foreCastPeriodItem : ForeCastPeriodItem) {
+
+        coroutineScope.launch {
+            useCases.addForeCastPeriodItem(foreCastPeriodItem)
+            saved.postValue(true)
         }
-    }*/
+    }
+
+    //this method remove our ForeCastPeriod  our locale database
+    fun removeForeCastPeriodItem(foreCastPeriodItem : ForeCastPeriodItem) {
+        coroutineScope.launch {
+            useCases.removeForeCastPeriodItem(foreCastPeriodItem)
+        }
+    }
+
+    private fun storageForeCastPeriodItem(foreCastPeriodItemEntities:List<ForeCastPeriodItemEntity>) {
+
+        for(element in foreCastPeriodItemEntities){
+            removeForeCastPeriodItem(element.toForeCastPeriodItem())
+        }
+
+        for(element in foreCastPeriodItemEntities){
+            saveForeCastPeriodItem(element.toForeCastPeriodItem())
+        }
+
+        prefHelper.saveUpdateTime(System.nanoTime())
+    }
+
+    private fun foreCastPeriodRetrieved(foreCastPeriodItemEntities:List<ForeCastPeriodItem>){
+        //foreCastPeriodeList.value = foreCastPeriodItemEntities
+    }
+
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable.clear()
+    }
+
+    fun getForeCastPeriod() {
+        coroutineScope.launch {
+            val noteList = useCases.getAllForeCastPeriodItem()
+            foreCastPeriodeList.postValue(noteList)
+        }
+    }
 
 
 }

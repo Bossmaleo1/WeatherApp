@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
@@ -16,6 +17,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.OrientationHelper
 import com.dagger.weatherapp.R
 import com.dagger.weatherapp.databinding.FragmentHomeBinding
 import com.dagger.weatherapp.framework.model.entity.City
@@ -72,7 +74,7 @@ class HomeFragment : Fragment() {
         }
 
         forecastList.apply{
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context,OrientationHelper.HORIZONTAL,false)
             adapter = foreCastListAdapter
         }
 
@@ -84,6 +86,10 @@ class HomeFragment : Fragment() {
         viewModel.foreCastPeriodeList.observe(this, Observer {foreCastPeriodList->
             foreCastPeriodList.let {
                 foreCastListAdapter.updateCityList(foreCastPeriodList)
+
+                for(element in foreCastPeriodList){
+                    Toast.makeText(context," ${element.temperature}", Toast.LENGTH_SHORT).show()
+                }
             }
         })
     }
