@@ -1,6 +1,7 @@
 package com.dagger.weatherapp
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.dagger.core.data.ForeCastPeriodItem
 import com.dagger.weatherapp.framework.model.entity.City
 import com.dagger.weatherapp.framework.viewmodel.ListCityViewModel
 import org.junit.Assert
