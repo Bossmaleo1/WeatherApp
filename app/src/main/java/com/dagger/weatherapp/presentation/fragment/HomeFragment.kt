@@ -82,7 +82,6 @@ class HomeFragment : Fragment() , OnMapReadyCallback {
         customOurCallBack()
 
 
-
         arguments?.let {
             city = HomeFragmentArgs.fromBundle(
                 it
@@ -100,6 +99,19 @@ class HomeFragment : Fragment() , OnMapReadyCallback {
             adapter = foreCastListAdapter
         }
 
+        //we color our swiperefresh progressbar
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary);
+
+        //we lauch our swiperefreshLayout
+        refreshLayout.setOnRefreshListener {
+            mainblock.visibility = View.GONE
+            shimmer_view_container.visibility = View.VISIBLE
+            refreshLayout.isRefreshing = false
+            //we get our path request
+            val path:String = ""+city?.lat+","+city?.long
+            viewModel.refresh(path)
+        }
+
         observeMyViewModel()
     }
 
@@ -115,6 +127,8 @@ class HomeFragment : Fragment() , OnMapReadyCallback {
                 Log.i("retrofit","done !!")
             }
         })
+
+
 
 
        /* viewModel.loading.observe(this, Observer { isLoading->

@@ -14,26 +14,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:padding="10dp"
             android:background="@drawable/list_city_radius">
-
-            <TextView
-                android:id="@+id/day"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{foreCastPeriodItem.name}" />
 
             <ImageView
                 android:id="@+id/icon"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_below="@+id/day"
                 android:src="@drawable/baseline_location_city_black_24" />
+
+            <TextView
+                android:id="@+id/day"
+                android:layout_below="@+id/icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{foreCastPeriodItem.name}" />
+
+
 
             <TextView
                 android:id="@+id/timeperiods"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/icon"
+                android:layout_below="@+id/day"
                 android:text="@{foreCastPeriodItem.startTime}" />
 
 
