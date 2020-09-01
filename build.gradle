@@ -9,6 +9,7 @@ buildscript {
     ext.rxJavaVersion = '2.1.1'
     ext.retrofitVersion = '2.3.0'
     ext.preferencesVersion = '1.0.0'
+    ext.glideVersion = '4.9.0'
 
     repositories {
         google()

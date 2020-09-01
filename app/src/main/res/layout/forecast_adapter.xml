@@ -1,91 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    >
 
-    <data>
-        <variable
-            name="foreCastPeriodItem"
-            type="com.dagger.core.data.ForeCastPeriodItem" />
-    </data>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <com.google.android.material.card.MaterialCardView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/gray"
+        android:padding="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray"
-            android:padding="5dp"
-            >
+            android:layout_gravity="center"
+            android:background="@drawable/list_city_radius">
 
-            <RelativeLayout
-                android:background="@drawable/list_city_radius"
+            <TextView
+                android:id="@+id/day"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                >
+                android:text="@{foreCastPeriodItem.name}" />
 
-                <TextView
-                    android:id="@+id/day"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{foreCastPeriodItem.name}"
-                    />
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_below="@+id/day"
+                android:src="@drawable/baseline_location_city_black_24" />
 
-                <ImageView
-                    android:id="@+id/icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_location_city_black_24"
-                    android:layout_below="@+id/day"
-                    />
-
-                <TextView
-                    android:id="@+id/timeperiods"
-                    android:layout_below="@+id/icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{foreCastPeriodItem.startTime}"
-                    />
+            <TextView
+                android:id="@+id/timeperiods"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/icon"
+                android:text="@{foreCastPeriodItem.startTime}" />
 
 
-                <TextView
-                    android:id="@+id/temperature"
-                    android:layout_below="@+id/timeperiods"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{String.valueOf(foreCastPeriodItem.temperature)}"
-                    />
+            <TextView
+                android:id="@+id/temperature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/timeperiods"
+                android:text="@{String.valueOf(foreCastPeriodItem.temperature)}" />
 
-                <TextView
-                    android:id="@+id/windSpeed"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/temperature"
-                    android:text="@{foreCastPeriodItem.windSpeed}"
-                    />
+            <TextView
+                android:id="@+id/windSpeed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/temperature"
+                android:text="@{foreCastPeriodItem.windSpeed}" />
 
-                <TextView
-                    android:id="@+id/shortforecast"
-                    android:layout_below="@+id/windSpeed"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{foreCastPeriodItem.shortForecast}"
-                    />
+            <TextView
+                android:id="@+id/shortforecast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/windSpeed"
+                android:text="@{foreCastPeriodItem.shortForecast}" />
 
-                <TextView
-                    android:id="@+id/detailedForecast"
-                    android:layout_below="@+id/shortforecast"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{foreCastPeriodItem.detailedForecast}"
-                    />
-
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/detailedForecast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/shortforecast"
+                android:text="@{foreCastPeriodItem.detailedForecast}" />
 
         </RelativeLayout>
 
-    </com.google.android.material.card.MaterialCardView>
-</layout>
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>
